@@ -24,19 +24,18 @@
 
 <body>
 
-  <header class="container-flouid  p-5 m-0 mb-4">
+  <!--Creating a header as a container by using bootstrap grid system.-->
+  <header class="container-flouid  p-4 m-0 mb-4">
 
     <div class="row">
-      <div class="col">
+      <div class="col-12 col-md-6">
         <h1 class="display-3">Work Day Scheduler</h1>
-      </div>
-      <div class="col">
-        <button id="clearBtn" class="btn btn-danger">Clear Schedule</button>
-      </div>
-      <div class="col">
         <p class="lead">A simple calendar app for scheduling your work day</p>
       </div>
-      <div class="col">
+      <div class="col-12 col-md-2">
+        <button id="clearBtn" class="btn btn-danger">Clear Schedule</button>
+      </div>
+      <div class="col-12 col-md-4">
         <p id="currentDay" class="lead"></p>
       </div>
     </div>
