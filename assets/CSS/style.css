@@ -7,10 +7,34 @@ body {
   font-size: 16px;
   width: 100vw;
   height: 100vh;
-  background-color: #ffd7ba;
+  background-color: rgba(252, 162, 17, 0.5);
 }
 
 main {
   width: 100%;
   height: auto;
+}
+
+.hour {
+  background-color: rgba(248, 207, 201, 0.6);
+  border: none;
+  border-top: 0.15em solid #d8e2dc;
+  border-radius: 0.5em;
+  color: #780000;
+}
+
+.description {
+  background-color: #e9ecef;
+  resize: none;
+  white-space: pre-wrap;
+  border: 0.2em solid #d8e2dc;
+  border-right: 0;
+}
+
+label {
+  color: #780000;
+}
+
+.saveBtn {
+  width: 5%;
 }
