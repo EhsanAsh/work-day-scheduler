@@ -42,10 +42,6 @@ main {
   background-color: rgba(72, 220, 190, 0.7);
 }
 
-label {
-  color: #780000;
-}
-
 .saveBtn:hover {
   background-color: #fe6d73;
   transform: scale(1.1);
