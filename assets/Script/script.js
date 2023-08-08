@@ -53,6 +53,7 @@ $(document).ready(function () {
 
   }
 
+  // Used(https://learn.jquery.com/using-jquery-core/traversing/) as a reference.
   const storeData = function (event) {
 
     event.stopPropagation();
@@ -60,6 +61,21 @@ $(document).ready(function () {
     let currentTxt = $(this).siblings(".textDiv").children(".description").val().trim();
     localStorage.setItem(time, currentTxt);
 
+  };
+
+   // Defining a function to load saved data from local storage.
+  const loadSavedData = function () {
+      
+    const returnVal = function () {
+  
+      let time = $(this).attr("id");
+      let savedData = localStorage.getItem(time);
+      let textArea = $(this).find("textarea");
+      textArea.val(savedData);
+
+    };
+    timeBlock.each(returnVal);
+  
   };
 
   // Set interval to update time every second by using timeCounter function
@@ -73,5 +89,7 @@ $(document).ready(function () {
 
   // Setting an event listener for save button to store data in local storage.
   saveBtn.click(storeData);
+
+  loadSavedData();
 
 });
