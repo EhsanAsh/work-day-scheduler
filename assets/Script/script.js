@@ -4,6 +4,7 @@ $(document).ready(function () {
   let currentDay = $("#currentDay");
   let textDiv = $(".textDiv");
   let saveBtn = $(".saveBtn");
+  let clearBtn = $("#clearBtn");
   
   // Displaying current date and time.
   const timeCounter = function () {
@@ -53,6 +54,7 @@ $(document).ready(function () {
 
   }
 
+  // Used(https://learn.jquery.com/using-jquery-core/traversing/) as a reference.
   const storeData = function (event) {
 
     event.stopPropagation();
@@ -60,6 +62,28 @@ $(document).ready(function () {
     let currentTxt = $(this).siblings(".textDiv").children(".description").val().trim();
     localStorage.setItem(time, currentTxt);
 
+  };
+
+   // Defining a function to load saved data from local storage.
+  const loadSavedData = function () {
+      
+    const returnVal = function () {
+  
+      let time = $(this).attr("id");
+      let savedData = localStorage.getItem(time);
+      let textArea = $(this).find("textarea");
+      textArea.val(savedData);
+
+    };
+    timeBlock.each(returnVal);
+  
+  };
+
+  // Defining a function to clear all data from local storage.
+  // Used(https://www.w3schools.com/jsref/met_loc_reload.asp) as a reference.
+  const clearStorage = function () {
+      localStorage.clear();
+      location.reload();
   };
 
   // Set interval to update time every second by using timeCounter function
@@ -73,5 +97,10 @@ $(document).ready(function () {
 
   // Setting an event listener for save button to store data in local storage.
   saveBtn.click(storeData);
+
+  loadSavedData();
+
+  // Setting an event listener for clear button to clear all data from local storage.
+  clearBtn.click(clearStorage);
 
 });
