@@ -3,6 +3,7 @@ $(document).ready(function () {
   let timeBlock = $(".timeBlock");
   let currentDay = $("#currentDay");
   let textDiv = $(".textDiv");
+  let saveBtn = $(".saveBtn");
   
   // Displaying current date and time.
   const timeCounter = function () {
@@ -52,6 +53,15 @@ $(document).ready(function () {
 
   }
 
+  const storeData = function (event) {
+
+    event.stopPropagation();
+    let time = $(this).parent().attr("id");
+    let currentTxt = $(this).siblings(".textDiv").children(".description").val().trim();
+    localStorage.setItem(time, currentTxt);
+
+  };
+
   // Set interval to update time every second by using timeCounter function
   setInterval(timeCounter, 1000);
   
@@ -60,5 +70,8 @@ $(document).ready(function () {
   // Event listener for time blocks to change text area to input field and vice versa.
   textDiv.on("click", "textarea", txtToInput);
   textDiv.on("blur", "input", inputToTxt);
+
+  // Setting an event listener for save button to store data in local storage.
+  saveBtn.click(storeData);
 
 });
