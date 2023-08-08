@@ -4,6 +4,7 @@ $(document).ready(function () {
   let currentDay = $("#currentDay");
   let textDiv = $(".textDiv");
   let saveBtn = $(".saveBtn");
+  let clearBtn = $("#clearBtn");
   
   // Displaying current date and time.
   const timeCounter = function () {
@@ -78,6 +79,13 @@ $(document).ready(function () {
   
   };
 
+  // Defining a function to clear all data from local storage.
+  // Used(https://www.w3schools.com/jsref/met_loc_reload.asp) as a reference.
+  const clearStorage = function () {
+      localStorage.clear();
+      location.reload();
+  };
+
   // Set interval to update time every second by using timeCounter function
   setInterval(timeCounter, 1000);
   
@@ -91,5 +99,8 @@ $(document).ready(function () {
   saveBtn.click(storeData);
 
   loadSavedData();
+
+  // Setting an event listener for clear button to clear all data from local storage.
+  clearBtn.click(clearStorage);
 
 });
