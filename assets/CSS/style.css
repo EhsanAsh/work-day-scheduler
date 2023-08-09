@@ -1,3 +1,7 @@
+:root {
+  --darkRed: #780000;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,7 +11,24 @@ body {
   font-size: 16px;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(252, 162, 17, 0.5);
+  background-color: rgba(203, 243, 240, 0.7);
+}
+
+.display-3 {
+  font-family: "Monoton", cursive;
+  font-size: 3em;
+  color: #d68c45;
+}
+
+#msg {
+  font-family: "Comfortaa", cursive;
+  font-size: 1em;
+  color: var(--darkRed);
+}
+
+#currentDay {
+  font-family: "Edu SA Beginner", cursive;
+  color: var(--darkRed);
 }
 
 main {
@@ -20,7 +41,7 @@ main {
   border: none;
   border-top: 0.15em solid #d8e2dc;
   border-radius: 0.5em;
-  color: #780000;
+  color: var(--darkRed);
 }
 
 .description {
@@ -31,7 +52,7 @@ main {
 }
 
 .past {
-  background-color: #ffdd00db;
+  background-color: rgba(252, 162, 17, 0.7);
 }
 
 .present {
@@ -50,5 +71,9 @@ main {
 .hour,
 .description,
 .saveBtn {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0.7em rgba(0, 0, 0, 0.5);
+}
+
+.footerTxt {
+  color: var(--darkRed);
 }
