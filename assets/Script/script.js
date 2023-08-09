@@ -1,23 +1,106 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
+$(document).ready(function () {
+
+  let timeBlock = $(".timeBlock");
+  let currentDay = $("#currentDay");
+  let textDiv = $(".textDiv");
+  let saveBtn = $(".saveBtn");
+  let clearBtn = $("#clearBtn");
+  
+  // Displaying current date and time.
+  const timeCounter = function () {
+    let today = dayjs().format('dddd, MMMM D YYYY, h:mm:ss a');
+    currentDay.text(today);
+  };
+
+  // Setting color for time blocks based on current time.
+  const allTimeBls = function () {
+
+    let currentHour = dayjs().hour();
+    // I'm trying to loop through each time block, get each Time block's id, and compare it to the current hour.
+    // Used (https://learn.jquery.com/using-jquery-core/iterating/) documentation as a reference.
+    timeBlock.each(function () {
+
+      let timeBlockHour = parseInt($(this).attr("id").split("-")[1]);
+      let textArea = $(this).find("textarea");
+      if (timeBlockHour < currentHour) {
+        textArea.addClass("past");
+      } else if (timeBlockHour === currentHour) {
+        textArea.addClass("present");
+      } else {
+        textArea.addClass("future");
+      }
+
+    });
+
+  };
+
+  // Here I'm trying to change the text area to an input field when clicked and vice versa to get user input, and make a bettter UX.
+  // Used(https://learn.jquery.com/events/event-basics/), (https://learn.jquery.com/using-jquery-core/attributes/) as a reference.
+  const txtToInput = function () {
+
+    let userTxt = $(this).val().trim();
+    let txtInput = $("<input>").addClass("description form-control").val(userTxt).attr("type", "text");
+    $(this).replaceWith(txtInput);
+    txtInput.trigger("focus");
+
+  }
+
+  const inputToTxt = function () {
+
+    let inputValue = $(this).val().trim();
+    let newTxtArea = $("<textarea>").addClass("description form-control").val(inputValue).attr({ "rows": "3", "placeholder": "Write your notes here."});
+    $(this).replaceWith(newTxtArea);
+    allTimeBls();
+
+  }
+
+  // Used(https://learn.jquery.com/using-jquery-core/traversing/) as a reference.
+  const storeData = function (event) {
+
+    event.stopPropagation();
+    let time = $(this).parent().attr("id");
+    let currentTxt = $(this).siblings(".textDiv").children(".description").val().trim();
+    localStorage.setItem(time, currentTxt);
+
+  };
+
+   // Defining a function to load saved data from local storage.
+  const loadSavedData = function () {
+      
+    const returnVal = function () {
+  
+      let time = $(this).attr("id");
+      let savedData = localStorage.getItem(time);
+      let textArea = $(this).find("textarea");
+      textArea.val(savedData);
+
+    };
+    timeBlock.each(returnVal);
+  
+  };
+
+  // Defining a function to clear all data from local storage.
+  // Used(https://www.w3schools.com/jsref/met_loc_reload.asp) as a reference.
+  const clearStorage = function () {
+      localStorage.clear();
+      location.reload();
+  };
+
+  // Set interval to update time every second by using timeCounter function
+  setInterval(timeCounter, 1000);
+  
+  allTimeBls();
+
+  // Event listener for time blocks to change text area to input field and vice versa.
+  textDiv.on("click", "textarea", txtToInput);
+  textDiv.on("blur", "input", inputToTxt);
+
+  // Setting an event listener for save button to store data in local storage.
+  saveBtn.click(storeData);
+
+  loadSavedData();
+
+  // Setting an event listener for clear button to clear all data from local storage.
+  clearBtn.click(clearStorage);
+
 });
